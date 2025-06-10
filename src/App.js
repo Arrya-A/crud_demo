@@ -3,6 +3,7 @@ import "./App.css";
 import Ewallet from "./pages/financial/e-wallet/Ewallet.jsx";
 import Login from "./pages/auth/Login.jsx";
 import Register from "./pages/auth/Register.jsx";
+import NetworkMembers from "./pages/networkMembers/NetworkMembers.jsx";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<Ewallet />} />
+        <Route path="/ewaller" element={<Ewallet />} />
+        <Route path="/home" element={<NetworkMembers />} />
       </Routes>
     </>
   );

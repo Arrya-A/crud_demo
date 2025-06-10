@@ -9,17 +9,13 @@ const useFetch = () => {
   });
 
   const fetchData = async () => {
-    const token = localStorage.getItem("token");
-    console.log("token", token);
-
     try {
-      const { status, data } = await axiosInstance.get("/deposit-wallet-data", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(data);
+      const { status, data } = await axiosInstance.get(
+        "/admin/deposit-wallet-data"
+      );
       if (status === 200) {
+        console.log("usefetch success");
+        
         setData(data.data);
       }
     } catch (err) {

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import UseAuth from "./hooks/useAuth";
@@ -11,13 +11,7 @@ const registerSchema = yup.object().shape({
   password: yup.string().required("Password is required"),
 });
 const Register = () => {
-  const { isUserRegistered, addUser } = UseAuth();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
+  const methods = useForm({
     defaultValues: {
       username: "",
       email: "",
@@ -25,6 +19,13 @@ const Register = () => {
     },
     resolver: yupResolver(registerSchema),
   });
+  const { isUserRegistered, addUser } = UseAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = methods;
 
   const onSubmit = (data) => {
     console.log(data);
@@ -61,42 +62,44 @@ const Register = () => {
             alignItems: "center",
           }}
         >
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2}>
-              <Typography>Sign Up</Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                label="Username"
-                {...register("username")}
-                error={!!errors.username}
-                helperText={errors?.username?.message}
-              />
-              <TextField
-                fullWidth
-                variant="outlined"
-                label="Email"
-                {...register("email")}
-                error={!!errors.email}
-                helperText={errors?.email?.message}
-              />
-              <TextField
-                fullWidth
-                variant="outlined"
-                type="password"
-                label="Password"
-                {...register("password")}
-                error={!!errors.password}
-                helperText={errors?.password?.message}
-              />
-              <Button fullWidth type="submit" variant="contained">
-                Sign Up
-              </Button>
-              <Typography>
-                Already have an account?Sign In <Link to={"/"}>here</Link>
-              </Typography>
-            </Stack>
-          </form>
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Stack spacing={2}>
+                <Typography>Sign Up</Typography>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="Username"
+                  {...register("username")}
+                  error={!!errors.username}
+                  helperText={errors?.username?.message}
+                />
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="Email"
+                  {...register("email")}
+                  error={!!errors.email}
+                  helperText={errors?.email?.message}
+                />
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  type="password"
+                  label="Password"
+                  {...register("password")}
+                  error={!!errors.password}
+                  helperText={errors?.password?.message}
+                />
+                <Button fullWidth type="submit" variant="contained">
+                  Sign Up
+                </Button>
+                <Typography>
+                  Already have an account?Sign In <Link to={"/"}>here</Link>
+                </Typography>
+              </Stack>
+            </form>
+          </FormProvider>
         </Box>
       </Box>
     </>

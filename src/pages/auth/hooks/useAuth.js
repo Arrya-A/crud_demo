@@ -1,51 +1,28 @@
-const UseAuth = () => {
-  const addUser = (userData) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    users.push(userData);
-    localStorage.setItem("users", JSON.stringify(users));
-  };
+import axiosInstance from "../../../utils/axiosInstance";
 
-  const isUserRegistered = (email) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    return users.find((user) => user.email === email);
-  };
-  const loginUser = ({ email, password }) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-      (user) => user.email === email && user.password === password
-    );
-
-    if (user) {
-      const tokenPayload = { email: user.email, username: user.username };
-      const token = btoa(JSON.stringify(tokenPayload));
-      localStorage.setItem("token", token);
-      return { success: true, token };
-    }
-    return { success: false };
-  };
-
-  const getToken = () => localStorage.getItem("token");
-
-  const verifyToken = () => {
-    const token = getToken();
-    console.log("tokengf", token);
-
-    if (!token) return null;
+const useAuth = () => {
+  const loginUser = async ({ username, password }) => {
     try {
-      const decodedToken = JSON.parse(atob(token));
-      console.log("Decoded token:", decodedToken);
-      return decodedToken;
+      const { status, data } = await axiosInstance.post("/login", {
+        username,
+        password,
+      });
+      if (status == 200) {
+        const { access_token } = data;
+        return {
+          success: true,
+          token: access_token,
+        };
+      }
     } catch (err) {
-      return null;
+      console.log("login error", err);
+      return {
+        success: false,
+        message: err?.message || "Login failed",
+      };
     }
   };
-  return {
-    isUserRegistered,
-    addUser,
-    loginUser,
-    verifyToken,
-    getToken,
-  };
+  return { loginUser };
 };
 
-export default UseAuth;
+export default useAuth;
