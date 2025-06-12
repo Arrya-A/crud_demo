@@ -8,12 +8,14 @@ import { useState } from "react";
 import useAuth from "./hooks/useAuth";
 
 const defaultValues = {
-  username: "",
+  // username: "",
+  email:"",
   password: "",
 };
 
 const loginSchema = yup.object().shape({
-  username: yup.string().required("Username is required"),
+  // username: yup.string().required("Username is required"),
+  email:yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
 });
 const Login = () => {
@@ -34,8 +36,8 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-    const { username, password } = data;
-    const { success, token, message } = await loginUser({ username, password });
+    const { email, password } = data;
+    const { success, token, message } = await loginUser({ email, password });
 
     if (success) {
       setLoginerror("");
@@ -72,12 +74,19 @@ const Login = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing={2}>
                 <Typography>Sign In</Typography>
-                <TextField
+                {/* <TextField
                   variant="outlined"
                   label="Username"
                   {...register("username")}
                   error={!!errors.username}
                   helperText={errors.username?.message}
+                ></TextField> */}
+                <TextField
+                  variant="outlined"
+                  label="Email"
+                  {...register("email")}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
                 ></TextField>
                 <TextField
                   variant="outlined"
@@ -87,6 +96,7 @@ const Login = () => {
                   error={!!errors.password}
                   helperText={errors.password?.message}
                 ></TextField>
+                
                 <Button fullWidth type="submit" variant="contained">
                   Sign In
                 </Button>

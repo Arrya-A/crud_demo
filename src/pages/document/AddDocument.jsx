@@ -2,19 +2,11 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import ShowAddModal from "./dialog";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 import axiosInstance from "../../utils/axiosInstance";
-import useDoc from "./hooks/useDoc"; // To refresh the doc list after add
 
 const AddDocument = () => {
   const [open, setOpen] = useState(false);
-  const { fetchDocs } = useDoc(); // Assuming fetchDocs exists in useDoc()
-
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,16 +17,20 @@ const AddDocument = () => {
     reset();
   };
 
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const onSubmit = async (data) => {
     try {
-      await axiosInstance.post("/admin/tool-documents", data);
-      await fetchDocs(); // Refresh document list
-      handleClose();     // Close modal after success
+      const response = await axiosInstance.post("/admin/tool-documents", data);
     } catch (err) {
-      console.error("Error adding document:", err);
+      console.log(err);
     }
   };
-
   return (
     <>
       <Button variant="contained" onClick={handleClickOpen}>
@@ -47,8 +43,8 @@ const AddDocument = () => {
         register={register}
         errors={errors}
         onSubmit={onSubmit}
-        title="Add Document"
-        submitAction="Add"
+        title="Add"
+        submitText="Add"
       />
     </>
   );

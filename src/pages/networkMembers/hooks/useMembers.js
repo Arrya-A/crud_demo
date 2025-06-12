@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 const useMembers = () => {
   const [data, setData] = useState([]);
@@ -10,8 +10,9 @@ const useMembers = () => {
       );
       if (status == 200) {
         console.log("usemember success");
+        setData(data.data.data)
         console.log(data.data.data);
-        setData(data.data.data);
+        
       }
     } catch (err) {
       console.log(err);

@@ -1,10 +1,10 @@
 import axiosInstance from "../../../utils/axiosInstance";
 
 const useAuth = () => {
-  const loginUser = async ({ username, password }) => {
+  const loginUser = async ({ email, password }) => {
     try {
       const { status, data } = await axiosInstance.post("/login", {
-        username,
+        email,
         password,
       });
       if (status == 200) {
