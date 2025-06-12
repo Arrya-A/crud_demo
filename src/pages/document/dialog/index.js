@@ -46,21 +46,26 @@ const index = ({
                   label="Document Title"
                   variant="outlined"
                   {...register("title")}
-                  
                 />
                 <TextField
                   fullWidth
                   label="Sort Order"
                   variant="outlined"
                   {...register("sort_order")}
-                  
                 />
+
+                {/* <TextField
+                  fullWidth
+                  name="sample_doc"
+                  variant="outlined"
+                  type="file"
+                  label="upload document"
+                  {...register("doc_url")}
+                /> */}
               </Stack>
             </DialogContent>
             <DialogActions>
-              <Button type="submit" >
-                {submitText}
-              </Button>
+              <Button type="submit">{submitText}</Button>
               <Button onClick={handleClose}>Cancel</Button>
             </DialogActions>
           </form>

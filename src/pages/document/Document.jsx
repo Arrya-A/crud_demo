@@ -8,33 +8,52 @@ import {
 import useDoc from "./hooks/useDoc";
 import AddDocument from "./AddDocument";
 import EditDocument from "./EditDocument";
-const heading = ["No", "File title", "sort order", "created date", "action"];
+import Map from "../components/Map";
+
+const heading = [
+  "No",
+  "File title",
+  "sort order",
+  "url",
+  "created date",
+  "action",
+];
+
 const Document = () => {
-  const { doc } = useDoc();
-  console.log(doc);
+  const { doc, fetchDoc } = useDoc();
 
   return (
     <>
-      <AddDocument />
+      {/* <AddDocument /> */}
       <Table>
         <TableHead>
           <TableRow>
-            {heading.map((head, id) => (
-              <TableCell key={id}>{head}</TableCell>
-            ))}
+            <Map
+              list={heading}
+              render={(heading, id) => (
+                <TableCell key={id}>{heading}</TableCell>
+              )}
+            />
           </TableRow>
         </TableHead>
         <TableBody>
-          {doc &&
-            doc.map((item) => (
+          <Map
+            list={doc}
+            render={(item) => (
               <TableRow key={item.id}>
                 <TableCell>{item.id}</TableCell>
                 <TableCell>{item.title}</TableCell>
                 <TableCell>{item.sort_order}</TableCell>
+                <TableCell component="a" href={item.doc_url}>
+                  Download pdf
+                </TableCell>
                 <TableCell>{item.created_at}</TableCell>
-                <TableCell><EditDocument/></TableCell>
+                <TableCell>
+                  <EditDocument item={item} fetchDoc={fetchDoc} />{" "}
+                </TableCell>
               </TableRow>
-            ))}
+            )}
+          />
         </TableBody>
       </Table>
     </>

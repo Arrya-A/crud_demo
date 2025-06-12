@@ -33,7 +33,7 @@ const AddDocument = () => {
   };
   return (
     <>
-      <Button variant="contained" onClick={handleClickOpen}>
+      <Button type="submit" variant="contained" onClick={handleClickOpen}>
         Add
       </Button>
       <ShowAddModal
