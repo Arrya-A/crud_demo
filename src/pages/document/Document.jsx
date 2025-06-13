@@ -9,6 +9,7 @@ import useDoc from "./hooks/useDoc";
 import AddDocument from "./AddDocument";
 import EditDocument from "./EditDocument";
 import Map from "../components/Map";
+import dayjs from "dayjs";
 
 const heading = [
   "No",
@@ -47,7 +48,9 @@ const Document = () => {
                 <TableCell component="a" href={item.doc_url}>
                   Download pdf
                 </TableCell>
-                <TableCell>{item.created_at}</TableCell>
+                <TableCell>
+                  {dayjs(item.created_at).format("DD MMM YYYY")}
+                </TableCell>
                 <TableCell>
                   <EditDocument item={item} fetchDoc={fetchDoc} />{" "}
                 </TableCell>

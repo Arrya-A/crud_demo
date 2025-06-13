@@ -1,8 +1,7 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import ShowAddModal from "./dialog";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import axiosInstance from "../../utils/axiosInstance";
 
 const AddDocument = () => {
@@ -14,19 +13,18 @@ const AddDocument = () => {
 
   const handleClose = () => {
     setOpen(false);
-    reset();
+    methods.reset();
   };
 
+  const methods = useForm();
   const {
     handleSubmit,
-    register,
-    reset,
     formState: { errors },
-  } = useForm();
+  } = methods;
 
   const onSubmit = async (data) => {
     try {
-      const response = await axiosInstance.post("/admin/tool-documents", data);
+      await axiosInstance.post("/admin/tool-documents", data);
     } catch (err) {
       console.log(err);
     }
@@ -40,7 +38,7 @@ const AddDocument = () => {
         open={open}
         handleClose={handleClose}
         handleSubmit={handleSubmit}
-        register={register}
+        methods={methods}
         errors={errors}
         onSubmit={onSubmit}
         title="Add"

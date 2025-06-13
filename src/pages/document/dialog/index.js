@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,8 +19,7 @@ const index = ({
   open,
   handleClose,
   handleSubmit,
-  register,
-  errors,
+  methods,
   onSubmit,
   title,
   submitText,
@@ -37,7 +36,7 @@ const index = ({
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{title}</DialogTitle>
-        <FormProvider>
+        <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <DialogContent>
               <Stack spacing={2}>
@@ -45,13 +44,13 @@ const index = ({
                   fullWidth
                   label="Document Title"
                   variant="outlined"
-                  {...register("title")}
+                  name="title"
                 />
                 <TextField
                   fullWidth
                   label="Sort Order"
                   variant="outlined"
-                  {...register("sort_order")}
+                  name="sort_order"
                 />
 
                 {/* <TextField
