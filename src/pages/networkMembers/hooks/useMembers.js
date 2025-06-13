@@ -8,7 +8,7 @@ const useMembers = () => {
       const { status, data } = await axiosInstance.get(
         "/admin/users?page=1&type=network"
       );
-      if (status == 200) {
+      if (status === 200) {
         console.log("usemember success");
         setData(data.data.data)
         console.log(data.data.data);

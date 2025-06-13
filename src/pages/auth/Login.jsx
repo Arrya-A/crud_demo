@@ -20,10 +20,6 @@ const loginSchema = yup.object().shape({
 });
 const Login = () => {
   const { loginUser } = useAuth();
-  const methods = useForm({
-    defaultValues,
-    resolver: yupResolver(loginSchema),
-  });
 
   const [loginerror, setLoginerror] = useState("");
   const navigate = useNavigate();
@@ -32,7 +28,10 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = methods;
+  } =  useForm({
+    defaultValues,
+    resolver: yupResolver(loginSchema),
+  });
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -70,7 +69,6 @@ const Login = () => {
             alignItems: "center",
           }}
         >
-          <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing={2}>
                 <Typography>Sign In</Typography>
@@ -108,7 +106,6 @@ const Login = () => {
                 </Typography>
               </Stack>
             </form>
-          </FormProvider>
         </Box>
       </Box>
     </>

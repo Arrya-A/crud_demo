@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 
 const useDoc = () => {
@@ -21,9 +21,25 @@ const useDoc = () => {
       const { status } = await axiosInstance.delete(
         `/admin/tool-documents/${id}`
       );
-      if (status == 200) {
+      if (status === 200) {
         fetchDoc();
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const editDoc = async (id, data) => {
+    try {
+      await axiosInstance.put(`/admin/tool-documents/${id}`, data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addDoc = async (data) => {
+    try {
+      await axiosInstance.post(`/admin/tool-documents`, data)
     } catch (err) {
       console.log(err);
     }
@@ -33,7 +49,7 @@ const useDoc = () => {
     fetchDoc();
   }, []);
 
-  return { doc, fetchDoc, deleteDoc };
+  return { doc, fetchDoc, deleteDoc, editDoc, addDoc };
 };
 
 export default useDoc;

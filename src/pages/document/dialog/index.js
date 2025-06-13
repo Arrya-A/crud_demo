@@ -19,8 +19,8 @@ const index = ({
   open,
   handleClose,
   handleSubmit,
-  methods,
   onSubmit,
+  register,
   title,
   submitText,
 }) => {
@@ -36,39 +36,41 @@ const index = ({
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{title}</DialogTitle>
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogContent>
-              <Stack spacing={2}>
-                <TextField
-                  fullWidth
-                  label="Document Title"
-                  variant="outlined"
-                  name="title"
-                />
-                <TextField
-                  fullWidth
-                  label="Sort Order"
-                  variant="outlined"
-                  name="sort_order"
-                />
 
-                {/* <TextField
-                  fullWidth
-                  name="sample_doc"
-                  variant="outlined"
-                  type="file"
-                  label="upload document"
-                  {...register("doc_url")}
-                /> */}
-              </Stack>
-            </DialogContent>
-            <DialogActions>
-              <Button type="submit">{submitText}</Button>
-              <Button onClick={handleClose}>Cancel</Button>
-            </DialogActions>
-          </form>
-        </FormProvider>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
+            <Stack spacing={2}>
+              <TextField
+                fullWidth
+                label="Document Title"
+                variant="outlined"
+                name="title"
+                {...register("title")}
+              />
+              <TextField
+                fullWidth
+                label="Sort Order"
+                variant="outlined"
+                name="sort_order"
+                {...register("sort_order")}
+              />
+
+              <TextField
+                fullWidth
+                name="sample_doc"
+                variant="outlined"
+                type="file"
+                label="upload document"
+                {...register("doc_url")}
+                accept=".pdf,.doc,.docx,.jpg,.png"
+              />
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" color="success" type="submit">{submitText}</Button>
+            <Button variant="contained" color="error" onClick={handleClose}>Cancel</Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </>
   );

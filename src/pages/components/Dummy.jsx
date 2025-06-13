@@ -2,9 +2,7 @@ import React from 'react'
 
 const Dummy = () => {
   return (
-    <div>
-        TextField
-    </div>
+    <div>Dummy</div>
   )
 }
 

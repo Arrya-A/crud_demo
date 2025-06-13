@@ -3,8 +3,10 @@ import { useState } from "react";
 import ShowAddModal from "./dialog";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../utils/axiosInstance";
+import useDoc from "./hooks/useDoc";
 
 const AddDocument = () => {
+  const { addDoc, fetchDoc } = useDoc();
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -13,18 +15,21 @@ const AddDocument = () => {
 
   const handleClose = () => {
     setOpen(false);
-    methods.reset();
+    reset();
   };
 
-  const methods = useForm();
   const {
     handleSubmit,
+    reset,
+    register,
     formState: { errors },
-  } = methods;
+  } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      await axiosInstance.post("/admin/tool-documents", data);
+      await addDoc(data);
+      handleClose();
+      fetchDoc();
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +43,7 @@ const AddDocument = () => {
         open={open}
         handleClose={handleClose}
         handleSubmit={handleSubmit}
-        methods={methods}
+        register={register}
         errors={errors}
         onSubmit={onSubmit}
         title="Add"

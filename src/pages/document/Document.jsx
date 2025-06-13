@@ -1,4 +1,5 @@
 import {
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -10,6 +11,7 @@ import AddDocument from "./AddDocument";
 import EditDocument from "./EditDocument";
 import Map from "../components/Map";
 import dayjs from "dayjs";
+import DeleteDocument from "./DeleteDocument";
 
 const heading = [
   "No",
@@ -25,7 +27,7 @@ const Document = () => {
 
   return (
     <>
-      {/* <AddDocument /> */}
+      <AddDocument />
       <Table>
         <TableHead>
           <TableRow>
@@ -52,7 +54,10 @@ const Document = () => {
                   {dayjs(item.created_at).format("DD MMM YYYY")}
                 </TableCell>
                 <TableCell>
-                  <EditDocument item={item} fetchDoc={fetchDoc} />{" "}
+                  <Stack direction="row" spacing={1}>
+                    <EditDocument item={item} fetchDoc={fetchDoc} />
+                    <DeleteDocument id={item.id} />
+                  </Stack>
                 </TableCell>
               </TableRow>
             )}

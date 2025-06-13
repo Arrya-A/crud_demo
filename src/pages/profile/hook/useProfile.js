@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 
 const useProfile = () => {
@@ -7,7 +7,7 @@ const useProfile = () => {
   const fetchProfile = async () => {
     try {
       const { data, status } = await axiosInstance.get("/profile");
-      if (status == 200) {
+      if (status === 200) {
         setProfiledata(data.data.user);
         console.log(data);
       }

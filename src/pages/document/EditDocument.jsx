@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import ShowEditModal from "./dialog";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import axiosInstance from "../../utils/axiosInstance";
 import useDoc from "./hooks/useDoc";
 
 const EditDocument = ({ item, fetchDoc }) => {
+  const { editDoc } = useDoc();
   const [open, setOpen] = useState(false);
-  const { deleteDoc } = useDoc();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,12 +28,8 @@ const EditDocument = ({ item, fetchDoc }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
-      const response = await axiosInstance.put(
-        `/admin/tool-documents/${item.id}`,
-        data
-      );
+      await editDoc(item.id, data);
       handleClose();
       fetchDoc();
     } catch (err) {
@@ -42,22 +37,12 @@ const EditDocument = ({ item, fetchDoc }) => {
     }
   };
 
-  const handleDelete = () => {
-    deleteDoc(item.id);
-  };
-
-  useEffect(() => {
-    fetchDoc();
-  }, []);
-
   return (
     <div>
       <Button variant="contained" onClick={handleClickOpen}>
         Edit
       </Button>
-      <Button variant="outlined" onClick={handleDelete}>
-        Delete
-      </Button>
+
       <ShowEditModal
         open={open}
         handleClose={handleClose}
