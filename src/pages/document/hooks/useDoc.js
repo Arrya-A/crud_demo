@@ -29,18 +29,36 @@ const useDoc = () => {
     }
   };
 
-  const editDoc = async (id, data) => {
+  const editDoc = async (id, formData) => {
     try {
-      await axiosInstance.put(`/admin/tool-documents/${id}`, data);
-    } catch (err) {
+    const response = await axiosInstance.post(
+      `/admin/tool-documents/${id}?_method=PUT`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
+  } catch (err) {
       console.log(err);
     }
   };
 
-  const addDoc = async (data) => {
+  const addDoc = async (formData) => {
     try {
-      await axiosInstance.post(`/admin/tool-documents`, data)
-    } catch (err) {
+    const response = await axiosInstance.post(
+      "/admin/tool-documents",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
+  } catch (err) {
       console.log(err);
     }
   };

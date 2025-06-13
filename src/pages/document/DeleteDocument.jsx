@@ -1,9 +1,6 @@
-import React from "react";
-import useDoc from "./hooks/useDoc";
 import { Button } from "@mui/material";
 
-const DeleteDocument = ({ id }) => {
-  const { deleteDoc } = useDoc();
+const DeleteDocument = ({ id, deleteDoc }) => {
   const handleDelete = async () => {
     try {
       await deleteDoc(id);

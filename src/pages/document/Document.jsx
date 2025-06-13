@@ -23,11 +23,11 @@ const heading = [
 ];
 
 const Document = () => {
-  const { doc, fetchDoc } = useDoc();
+  const { doc, fetchDoc,deleteDoc  } = useDoc();
 
   return (
     <>
-      <AddDocument />
+      <AddDocument fetchDoc={fetchDoc} />
       <Table>
         <TableHead>
           <TableRow>
@@ -56,7 +56,7 @@ const Document = () => {
                 <TableCell>
                   <Stack direction="row" spacing={1}>
                     <EditDocument item={item} fetchDoc={fetchDoc} />
-                    <DeleteDocument id={item.id} />
+                    <DeleteDocument id={item.id} deleteDoc={deleteDoc } />
                   </Stack>
                 </TableCell>
               </TableRow>

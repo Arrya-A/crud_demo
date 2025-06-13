@@ -2,11 +2,10 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import ShowAddModal from "./dialog";
 import { useForm } from "react-hook-form";
-import axiosInstance from "../../utils/axiosInstance";
 import useDoc from "./hooks/useDoc";
 
-const AddDocument = () => {
-  const { addDoc, fetchDoc } = useDoc();
+const AddDocument = ({fetchDoc}) => {
+  const { addDoc } = useDoc();
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -27,7 +26,15 @@ const AddDocument = () => {
 
   const onSubmit = async (data) => {
     try {
-      await addDoc(data);
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("sort_order", data.sort_order);
+
+      if (data.document_url && data.document_url[0]) {
+        formData.append("document_url", data.document_url[0]);
+      }
+
+      await addDoc(formData);
       handleClose();
       fetchDoc();
     } catch (err) {

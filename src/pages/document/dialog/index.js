@@ -61,7 +61,7 @@ const index = ({
                 variant="outlined"
                 type="file"
                 label="upload document"
-                {...register("doc_url")}
+                {...register("document_url")}
                 accept=".pdf,.doc,.docx,.jpg,.png"
               />
             </Stack>

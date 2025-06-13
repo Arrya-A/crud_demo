@@ -29,7 +29,14 @@ const EditDocument = ({ item, fetchDoc }) => {
 
   const onSubmit = async (data) => {
     try {
-      await editDoc(item.id, data);
+      const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("sort_order", data.sort_order);
+
+    if (data.document_url && data.document_url[0]) {
+      formData.append("document_url", data.document_url[0]);
+    }
+      await editDoc(item.id, formData);
       handleClose();
       fetchDoc();
     } catch (err) {
